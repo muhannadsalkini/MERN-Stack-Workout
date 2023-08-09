@@ -1,6 +1,8 @@
 require("dotenv").config(); // env folder to get hidden variables
 const express = require("express");
 
+const mogoose = require("mongoose");
+
 // import the routes from routes folder
 const workoutRoutes = require("./routes/workouts");
 
@@ -18,7 +20,15 @@ app.use((req, res, next) => {
 // using the routes at the app. this attach all the routes to the app
 app.use("/api/workouts", workoutRoutes);
 
-/* Listen for requests */
-app.listen(process.env.PORT, () => {
-  console.log("listening on port", process.env.PORT);
-});
+/* Connect to db */
+mogoose
+  .connect(process.env.MONGO_URI)
+  .then(() => {
+    /* Listen for requests once connected to database*/
+    app.listen(process.env.PORT, () => {
+      console.log("connected to db and listening on port", process.env.PORT);
+    });
+  })
+  .catch((error) => {
+    console.log(error);
+  });
