@@ -1,23 +1,24 @@
-require("dotenv").config();
+require("dotenv").config(); // env folder to get hidden variables
 const express = require("express");
 
-// express app
+// import the routes from routes folder
+const workoutRoutes = require("./routes/workouts");
+
+/* Set express app */
 const app = express();
 
-// middleware
+// middlewares
+app.use(express.json());
+
 app.use((req, res, next) => {
   console.log(req.path, req.method);
   next();
 });
 
-// routes
-app.get("/", (req, res) => {
-  res.json({ mssg: "Welcome to the app" });
-});
+// using the routes at the app. this attach all the routes to the app
+app.use("/api/workouts", workoutRoutes);
 
-// listen for requests
+/* Listen for requests */
 app.listen(process.env.PORT, () => {
   console.log("listening on port", process.env.PORT);
 });
-
-process.env;
