@@ -6,6 +6,8 @@ const {
   createWorkout,
   getWorkouts,
   getWorkout,
+  deleteWorkout,
+  updateWorkout,
 } = require("../controllers/workoutController");
 
 // use router abj as the app in server.js
@@ -23,14 +25,10 @@ router.get("/:id", getWorkout);
 router.post("/", createWorkout);
 
 // DELETE a new workout
-router.delete("/:id", (req, res) => {
-  res.json({ mssg: "delete a new workout" });
-});
+router.delete("/:id", deleteWorkout);
 
 // Update a new workout
-router.patch("/:id", (req, res) => {
-  res.json({ mssg: "update a new workout" });
-});
+router.patch("/:id", updateWorkout);
 
 /* 3. Export the router */
 module.exports = router;
