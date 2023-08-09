@@ -1,5 +1,9 @@
 /* 1. create the router */
 const express = require("express");
+
+// import the model
+const Workout = require("../models/workoutModel");
+
 // use router abj as the app in server.js
 const router = express.Router();
 
@@ -16,8 +20,14 @@ router.get("/:id", (req, res) => {
 });
 
 // PSOT a new workout
-router.post("/", (req, res) => {
-  res.json({ mssg: "post a new workout" });
+router.post("/", async (req, res) => {
+  const { title, load, reps } = req.body;
+  try {
+    const workout = await Workout.create({ title, load, reps });
+    res.status(200).json(workout);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
 });
 
 // DELETE a new workout
