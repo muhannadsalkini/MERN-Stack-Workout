@@ -1,15 +1,19 @@
 require("dotenv").config(); // env folder to get hidden variables
 const express = require("express");
 
-const mogoose = require("mongoose");
+// import cors for frontend
+const cors = require("cors");
 
 // import the routes from routes folder
 const workoutRoutes = require("./routes/workouts");
+
+const mogoose = require("mongoose");
 
 /* Set express app */
 const app = express();
 
 // middlewares
+app.use(cors());
 app.use(express.json());
 
 app.use((req, res, next) => {
